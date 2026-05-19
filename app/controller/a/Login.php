@@ -3,8 +3,8 @@ declare (strict_types = 1);
 
 namespace app\controller\a;
 
+use app\model\Admin as AdminModel;
 use app\model\Menu as MenuModel;
-use app\model\User as UserModel;
 use thans\jwt\facade\JWTAuth;
 use think\facade\Request;
 use think\response\Json;
@@ -16,9 +16,7 @@ class Login extends BaseController
 {
     /**
      * 手机号登录
-     * @param phone sting
-     * @param password string MD5加密字符串
-     * @return reponse Json
+     * @return Json
      */
     public function login(): Json
     {
@@ -26,28 +24,28 @@ class Login extends BaseController
         $post = Request::post();
 
         // 2.校验参数
-        $phone = $post['phone'] ? $post['phone'] : '';
+        $phone    = $post['phone'] ? $post['phone'] : '';
         $password = $post['password'] ? $post['password'] : '';
         if ($phone == '' || $password == '') {
             return $this->error('USER_LOGIN_ERROR');
         }
 
         // 3.查询数据库
-        $user = UserModel::where('phone', $phone)->find();
-        if (!$user) {
+        $admin = AdminModel::where('phone', $phone)->find();
+        if (! $admin) {
             return $this->error('USER_NOT_EXIST');
         }
 
         // 4.验证密码
-        if (encryptPassword($password, $user->salt) != $user->password) {
+        if (encryptPassword($password, $admin->salt) != $admin->password) {
             return $this->error('USER_LOGIN_ERROR');
         }
 
         // 5.生成token
-        $authInfo = array(
-            'uid' => $user->id,
-            'gid' => $user->group_id,
-        );
+        $authInfo = [
+            'uid' => $admin->id,
+            'gid' => $admin->group_id,
+        ];
 
         $token = JWTAuth::builder($authInfo);
 
@@ -60,11 +58,11 @@ class Login extends BaseController
      */
     public function loginInit()
     {
-        $data = array();
-        $uid = Session('authInfo.uid');
-        $gid = Session('authInfo.gid');
+        $data = [];
+        $uid  = Session('authInfo.uid');
+        $gid  = Session('authInfo.gid');
 
-        if (!$uid || !$gid) {
+        if (! $uid || ! $gid) {
             return $this->error('USER_NOT_LOGIN');
         }
 
@@ -83,17 +81,17 @@ class Login extends BaseController
      * @param int $uid
      * @return array
      */
-    private function __getAdminInfo($uid): array
+    private function __getAdminInfo(int $uid): array
     {
         // 1.用户信息，头像、昵称
         // 2.用户权限，树状菜单、权限菜单ids
-        return $user = UserModel::field('avatar,phone')->find($uid)->toArray();
+        return $user = AdminModel::field('avatar,phone')->find($uid)->toArray();
     }
 
     /**
      * 获取菜单树
      */
-    private function __getMenus($gid): array
+    private function __getMenus(int $gid): array
     {
         $menus = null;
         //超级管理员
@@ -106,7 +104,7 @@ class Login extends BaseController
     /**
      * 获取权限ids
      */
-    private function __getRules($gid): array
+    private function __getRules(int $gid): array
     {
         $ids = null;
         //超级管理员

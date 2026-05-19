@@ -22,12 +22,12 @@ Route::group('a', function () {
     // 需要认证
     Route::group(function () {
 
-        // User
+        /**********  User  **********/
         Route::get('admin', 'a.User/getInfo');
 
-        // Menu
+        /**********  Menu  **********/
         Route::get('menu/active', 'a.Menu/getActiveMenus'); // 获取当前用户的菜单
-        Route::get('menu/table', 'a.Menu/getTable'); // 获取所有菜单
+        Route::get('menu/table', 'a.Menu/getTable');        // 获取所有菜单
         Route::post('menu', 'a.Menu/add');
         Route::put('menu/:id', 'a.Menu/edit');
         Route::delete('menu/:id', 'a.Menu/delete');
@@ -43,58 +43,6 @@ Route::group('a', function () {
         Route::put('order/:id/done', 'a.Order/setDone');
         Route::put('order/:id/cancel', 'a.Order/setCancel');
 
-        // City
-        Route::get('city/table', 'a.City/getListAll');
-        Route::get('city/:id', 'a.City/getInfo');
-        Route::post('city', 'a.City/add');
-        Route::put('city/:id', 'a.City/edit');
-        Route::delete('city/:id', 'a.City/delete');
-
-        // Goods
-        Route::get('goods/list', 'a.Goods/getListByPage');
-        Route::get('goods/all', 'a.Goods/getAll');
-        Route::get('goods/:id', 'a.Goods/getInfo');
-        Route::post('goods', 'a.Goods/add');
-        Route::put('goods/:id', 'a.Goods/edit');
-        Route::delete('goods/:id', 'a.Goods/delete');
-
-        // Refund
-        Route::get('refund/list', 'a.Refund/getListByPage');
-        Route::get('refund/:id', 'a.Refund/getDetail');
-        Route::post('refund/add', 'a.Refund/add');
-        Route::put('refund/:id/update', 'a.Refund/edit');
-        Route::delete('refund/:id', 'a.Refund/delete');
-
-        // Statistic
-        // 订单基础
-        Route::get('statistic/order/basic', 'a.Statistic/getOrderBasic');
-        // 订单趋势
-        Route::get('statistic/order/trend', 'a.Statistic/getOrderTrend');
-        // 订单累计
-        Route::get('statistic/order/accumulate', 'a.Statistic/getOrderAccumulate');
-        // 商品排行
-        Route::get('statistic/goods/rank', 'a.Statistic/getGoodsRank');
-
-        // OCR
-        Route::post('ocr/order/add', 'a.ocr/getOrder');
-
-        Route::get('start', 'a.Login/loginInit');
-        Route::get('reserve/list', 'a.Reserve/getListByPage');
-        Route::get('shop/list', 'a.Shop/getList');
-        Route::put('shop/image', 'a.Shop/setImage');
-        Route::get('shop/roomtree', 'a.Shop/getShopAndRoom');
-        Route::put('shop/other', 'a.shop/setOther');
-        Route::get('shop/other/:id', 'a.shop/getOther');
-        Route::put('shop/:id', 'a.shop/edit');
-        Route::post('shop$', 'a.shop/add');
-        Route::put('room/:id', 'a.room/edit');
-        Route::post('room$', 'a.room/add');
-        Route::delete('room/:id', 'a.room/delete');
-        Route::post('reserve', 'a.Reserve/add');
-        Route::put('reserve/:id', 'a.Reserve/edit');
-        Route::delete('reserve/:id', 'a.Reserve/delete');
-        Route::post('upload$', 'a.Upload/index');
-        Route::put('user/changePwd', 'a.User/changePassword');
     })->middleware([TokenCheckMiddleware::class, RoleCheckMiddleware::class]);
 
     // 直接放行
@@ -106,6 +54,7 @@ Route::group('a', function () {
     Route::group(function () {
         Route::get('test/get', 'a.Index/testGet');
         Route::post('test/post', 'a.Index/testPost');
+        Route::get('test/db', 'a.Index/test');
     });
 
 });

@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\controller\a;
 
+use app\model\Line as LineModel;
 use think\facade\Request;
 
 class Index extends BaseController
@@ -14,15 +15,15 @@ class Index extends BaseController
 
         $data = json_decode($data, true);
         if ($data['Response']['TotalPDFCount'] == 1) {
-            $data = $data['Response']['MixedInvoiceItems'][0]['SingleInvoiceInfos']['OtherInvoice']['OtherInvoiceListItems'];
-            $data2 = array(
-                'sn' => '',
-                'order_date' => '',
-                'order_price' => 0,
-                'order_user' => '',
-                'order_zone' => [],
+            $data  = $data['Response']['MixedInvoiceItems'][0]['SingleInvoiceInfos']['OtherInvoice']['OtherInvoiceListItems'];
+            $data2 = [
+                'sn'            => '',
+                'order_date'    => '',
+                'order_price'   => 0,
+                'order_user'    => '',
+                'order_zone'    => [],
                 'order_address' => '',
-            );
+            ];
 
             foreach ($data as $item) {
                 switch ($item['Name']) {
@@ -81,6 +82,12 @@ class Index extends BaseController
             ['type', '222'],
         ]);
         return $this->success($where);
+    }
+
+    public function test()
+    {
+        $list = LineModel::where(1)->limit(0, 10)->select()->toArray();
+        dump($list);
     }
 
 }
