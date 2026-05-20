@@ -26,7 +26,7 @@ return [
             // 服务器地址
             'hostname'        => env('DB_HOST', '124.223.215.156'),
             // 数据库名
-            'database'        => env('DB_NAME', 'sanlidi'),
+            'database'        => env('DB_NAME', '33ly'),
             // 用户名
             'username'        => env('DB_USER', 'root'),
             // 密码
@@ -38,7 +38,7 @@ return [
             // 数据库编码默认采用utf8
             'charset'         => env('DB_CHARSET', 'utf8'),
             // 数据库表前缀
-            'prefix'          => env('DB_PREFIX', 'sld_'),
+            'prefix'          => env('DB_PREFIX', '33_'),
 
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
             'deploy'          => 0,

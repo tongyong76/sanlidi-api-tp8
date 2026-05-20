@@ -84,5 +84,8 @@ Route::group('u', function () {
         Route::put('reserve/:id', 'u.Reserve/edit');
         // 删除预定
         Route::delete('reserve/:id', 'a.Reserve/delete');
+
+        /**********  Banner  **********/
+        Route::get('banner/index', 'u.Banner/getIndexBanner');
     });
 });
