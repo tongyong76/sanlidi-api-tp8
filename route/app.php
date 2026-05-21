@@ -87,5 +87,16 @@ Route::group('u', function () {
 
         /**********  Banner  **********/
         Route::get('banner/index', 'u.Banner/getIndexBanner');
+
+        /**********  Goods  **********/
+        Route::get('goods/tj', 'u.Goods/getIndexTj');
+        Route::get('goods/hot', 'u.Goods/getIndexHot');
+        Route::get('goods/floor', 'u.Goods/getIndexFloor');
+
+        /**********  Article  **********/
+        Route::get('article/index', 'u.Article/getIndexNews');
+
+        /**********  Ad  **********/
+        Route::get('ad/getAll', 'u.Ad/getAll');
     });
 });

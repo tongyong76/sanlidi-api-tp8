@@ -2,22 +2,12 @@
 namespace app\model;
 
 use think\Model;
-use think\model\concern\SoftDelete;
 
 class Goods extends Model
 {
-    use SoftDelete;
-    protected $defaultSoftDelete = 0;
-    protected $autoWriteTimestamp = true;
-    protected $hidden = ['create_time', 'delete_time'];
-
-    public function setCostAttr($value)
+    public static function getByType(int $type, $start = 0, $length = 10)
     {
-        return $value * 100;
-    }
-
-    public function getCostAttr($value)
-    {
-        return $value / 100;
+        $list = self::where('is_del=0 and is_show=1 and minprice<>0 and type_id=' . $type)->order('ordid desc,add_time desc')->limit($start, $length)->select();
+        return $list->toArray();
     }
 }
