@@ -40,5 +40,4 @@ class Goods extends BaseController
 
         return $this->success($list);
     }
-
 }

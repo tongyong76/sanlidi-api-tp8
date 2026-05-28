@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+use app\middleware\AllowCrossDomain;
 use app\middleware\RoleCheckMiddleware;
 use app\middleware\TokenCheckMiddleware;
 use think\facade\Route;
@@ -93,10 +94,13 @@ Route::group('u', function () {
         Route::get('goods/hot', 'u.Goods/getIndexHot');
         Route::get('goods/floor', 'u.Goods/getIndexFloor');
 
+        /**********  GoodsCate  **********/
+        Route::get('cate/hot', 'u.GoodsCate/getIndexHot');
+
         /**********  Article  **********/
         Route::get('article/index', 'u.Article/getIndexNews');
 
         /**********  Ad  **********/
         Route::get('ad/getAll', 'u.Ad/getAll');
-    });
+    })->middleware([AllowCrossDomain::class]);;
 });

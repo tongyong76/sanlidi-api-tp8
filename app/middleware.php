@@ -1,8 +1,6 @@
 <?php
 // 全局中间件定义文件
 
-use app\middleware\AllowCrossDomain;
-
 return [
     // 全局请求缓存
     // \think\middleware\CheckRequestCache::class,
@@ -11,5 +9,5 @@ return [
     // Session初始化
     \think\middleware\SessionInit::class,
 
-    AllowCrossDomain::class,
+    \app\middleware\AllowCrossDomain::class,
 ];
